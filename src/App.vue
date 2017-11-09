@@ -18,40 +18,10 @@
               <v-card>
                 <v-card-title primary-title>
                   <h3>Contenedor</h3>
-
                   <v-chip outline color="secondary">Disponible</v-chip>
                 </v-card-title>
-                <div>
-                  <v-container fluid grid-list-sm text-xs-center>
-                    <v-layout row justify-center>
-                      <v-flex xs1 v-for="i in 10" :key="i">
-                        <v-card tile hover>
-                          <v-card-text>{{ i }}</v-card-text>
-                        </v-card>
-                      </v-flex>
-                    </v-layout>
 
-                    <v-layout row justify-center>
-                      <v-flex xs1 v-for="i in 10" :key="i">
-                          <v-card tile hover>
-                              <v-card-text>
-                                <v-badge v-show="i == 3" left>
-                                  <span slot="badge">P</span>
-                                </v-badge>
-
-                                <span>{{ i }}</span>
-
-                                <v-badge v-show="i == 3" right color="red">
-                                  <span slot="badge">C</span>
-                                </v-badge>
-
-                              <span class="slot-number grey--text">{{ i }}</span>
-                              </v-card-text>
-                          </v-card>
-                      </v-flex>
-                    </v-layout>
-                  </v-container>
-                </div>
+                <container :buffer="buffer" consumerPos="3" producerPos="4"></container>
               </v-card>
             </v-flex>
           </v-layout>
@@ -103,20 +73,22 @@
 </template>
 
 <script>
+  import Container from './components/Container';
+
+
   export default {
     data () {
       return {
         clipped: false,
         title: 'Practica X: Productor - Consumidor',
+        buffer: Array.from(Array(40).keys(), (i) => ({payload: i+1})),
       }
-    }
+    },
+    components: {
+      Container,
+    },
   }
 </script>
 
 <style lang="scss">
-  .slot-number {
-    bottom: 0px;
-    right: 5px;
-    position: absolute;
-  }
 </style>
