@@ -76,11 +76,13 @@
   import Container from './components/Container';
 
   import Buffer from './models/Buffer';
+  import Producer from './models/Producer';
 
   import { BUFFER_SIZE } from './const';
 
 
   const buffer = new Buffer(BUFFER_SIZE);
+  const producer = new Producer();
 
   export default {
     data () {
