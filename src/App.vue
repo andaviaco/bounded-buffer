@@ -75,13 +75,18 @@
 <script>
   import Container from './components/Container';
 
+  import Buffer from './models/Buffer';
+
+  import { BUFFER_SIZE } from './const';
+
+
+  const buffer = new Buffer(BUFFER_SIZE);
 
   export default {
     data () {
       return {
-        clipped: false,
         title: 'Practica X: Productor - Consumidor',
-        buffer: Array.from(Array(40).keys(), (i) => ({payload: i+1})),
+        buffer: buffer.data,
       }
     },
     components: {
