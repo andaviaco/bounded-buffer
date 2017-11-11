@@ -16,7 +16,7 @@ export const CONSUMER_STATUS = {
 };
 
 export const BUFFER_AGENTS = {
-  none: 'disponible',
+  none: null,
   producer: 'productor',
   consumer: 'consumidor',
 };
