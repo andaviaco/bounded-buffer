@@ -10,6 +10,19 @@ export default class Buffer {
     this.currentAgent = BUFFER_AGENTS.none;
   }
 
+  get freeslots() {
+    return this.data.reduce((acc, slot) => acc += slot.payload? 0 : 1, 0);
+  }
+
+  get loadedSlots() {
+    return this.data.reduce((acc, slot) => acc += slot.payload? 1 : 0, 0);
+  }
+
+  get isAvailable() {
+    console.log(!this.currentAgent, this.currentAgent);
+    return !this.currentAgent;
+  }
+
   async insert(payload) {
     this.currentAgent = BUFFER_AGENTS.producer;
 
