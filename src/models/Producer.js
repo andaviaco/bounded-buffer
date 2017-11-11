@@ -10,5 +10,9 @@ export default class Producer {
     return Array.from(Array(n), () => PRODUCER_CHARS[getRandomIntInclusive(0, PRODUCER_CHARS.length - 1)]);
   }
 
+  randProduct() {
+    const product = this.produce(getRandomIntInclusive(2, 8));
 
+    return product;
+  }
 }
