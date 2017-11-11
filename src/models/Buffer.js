@@ -40,4 +40,26 @@ export default class Buffer {
     this.currentAgent = BUFFER_AGENTS.none;
   }
 
+  async remove(n=1) {
+    this.currentAgent = BUFFER_AGENTS.consumer;
+    const consumed = [];
+
+    for (const i of new Array(n)) {
+      await timedFn(() => {
+        const data = this.data[this.consumerIndex].payload;
+
+        consumed.push(data);
+        this.data[this.consumerIndex].payload = null;
+        this.consumerIndex += 1;
+
+        if (this.consumerIndex >= this.size) {
+          this.consumerIndex = 0;
+        }
+      });
+    }
+
+    this.currentAgent = BUFFER_AGENTS.none;
+
+    return consumed;
+  }
 }
