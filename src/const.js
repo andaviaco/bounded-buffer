@@ -10,7 +10,13 @@ export const PRODUCER_STATUS = {
 };
 
 export const BUFFER_AGENTS = {
-  none: null,
-  producer: 'producer',
-  consumer: 'consumer',
+  none: 'disponible',
+  producer: 'productor',
+  consumer: 'consumidor',
+};
+
+export const BUFFER_AGENTS_COLORS = {
+  [BUFFER_AGENTS.none]: 'secondary',
+  [BUFFER_AGENTS.producer]: 'primary',
+  [BUFFER_AGENTS.consumer]: 'red',
 };

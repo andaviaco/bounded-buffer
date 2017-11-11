@@ -18,8 +18,8 @@
               <v-card>
                 <v-card-title primary-title>
                   <h3>Contenedor</h3>
-                  <v-chip outline color="secondary">
-                    <v-icon left>info</v-icon> Disponible
+                  <v-chip outline :color="agentColor">
+                    <v-icon left>info</v-icon> {{buffer.currentAgent}}
                     </v-chip>
                 </v-card-title>
 
@@ -35,7 +35,11 @@
                     >
                     <v-icon>play_arrow</v-icon>
                   </v-btn>
-                  <container :buffer="buffer.data" consumerPos="3" :producerPos="buffer.producerIndex"></container>
+                  <container
+                    :buffer="buffer.data"
+                    :consumerPos="buffer.consumerIndex"
+                    :producerPos="buffer.producerIndex"
+                  ></container>
                 </v-card-text>
               </v-card>
             </v-flex>
@@ -81,7 +85,7 @@
   import Producer from './models/Producer';
 
   import { setRandomTimeout } from './util';
-  import { BUFFER_SIZE } from './const';
+  import { BUFFER_SIZE, BUFFER_AGENTS_COLORS } from './const';
 
 
   const buffer = new Buffer(BUFFER_SIZE);
@@ -94,6 +98,11 @@
         buffer: buffer,
         producerPos: buffer.producerIndex,
       };
+    },
+    computed: {
+      agentColor() {
+        return BUFFER_AGENTS_COLORS[this.buffer.currentAgent];
+      }
     },
     methods: {
       handleStartClick() {
