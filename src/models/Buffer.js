@@ -31,7 +31,7 @@ export default class Buffer {
         this.data[this.producerIndex].payload = data;
         this.producerIndex += 1;
 
-        if (this.producerIndex > this.size) {
+        if (this.producerIndex >= this.size) {
           this.producerIndex = 0;
         }
       });
