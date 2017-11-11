@@ -15,3 +15,11 @@ export function setRandomTimeout(fn) {
   return timeoutId;
 }
 
+export function timedFn(fn) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      fn();
+      resolve();
+    }, 1000);
+  });
+}
