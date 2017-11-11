@@ -18,10 +18,25 @@
               <v-card>
                 <v-card-title primary-title>
                   <h3>Contenedor</h3>
-                  <v-chip outline color="secondary">Disponible</v-chip>
+                  <v-chip outline color="secondary">
+                    <v-icon left>info</v-icon> Disponible
+                    </v-chip>
                 </v-card-title>
 
-                <container :buffer="buffer" consumerPos="3" producerPos="4"></container>
+                <v-card-text>
+                  <v-btn
+                    absolute
+                    dark
+                    fab
+                    top
+                    right
+                    color="blue"
+                    @click="handleStartClick"
+                    >
+                    <v-icon>play_arrow</v-icon>
+                  </v-btn>
+                  <container :buffer="buffer.data" consumerPos="3" :producerPos="buffer.producerIndex"></container>
+                </v-card-text>
               </v-card>
             </v-flex>
           </v-layout>

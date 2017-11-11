@@ -5,13 +5,13 @@
         <v-flex xs1 v-for="(slot, j) in row" :key="slot.oindex">
             <v-card tile hover>
                 <v-card-text>
-                  <v-badge v-show="producerPos && slot.oindex == producerPos" left>
+                  <v-badge v-show="producerPos !== null && producerPos == slot.oindex" left>
                     <span slot="badge">P</span>
                   </v-badge>
 
-                  <span>{{ slot.payload }}</span>
+                  <span>{{ slot.payload || '-' }}</span>
 
-                  <v-badge v-show="consumerPos && slot.oindex == consumerPos" right color="red">
+                  <v-badge v-show="consumerPos !== null && consumerPos == slot.oindex" right color="red">
                     <span slot="badge">C</span>
                   </v-badge>
 
