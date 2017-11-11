@@ -9,3 +9,8 @@ export const PRODUCER_STATUS = {
   wakingUp: 2,
 };
 
+export const BUFFER_AGENTS = {
+  none: null,
+  producer: 'producer',
+  consumer: 'consumer',
+};
