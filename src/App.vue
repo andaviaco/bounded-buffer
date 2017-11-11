@@ -78,6 +78,7 @@
   import Buffer from './models/Buffer';
   import Producer from './models/Producer';
 
+  import { setRandomTimeout } from './util';
   import { BUFFER_SIZE } from './const';
 
 
@@ -88,8 +89,18 @@
     data () {
       return {
         title: 'Practica X: Productor - Consumidor',
-        buffer: buffer.data,
-      }
+        buffer: buffer,
+        producerPos: buffer.producerIndex,
+      };
+    },
+    methods: {
+      handleStartClick() {
+        this.producerTimeout = setRandomTimeout(this.wakeProducerUp);
+      },
+      async wakeProducerUp() {
+        await buffer.insert(producer.randProduct());
+        this.producerTimeout = setRandomTimeout(this.wakeProducerUp);
+      },
     },
     components: {
       Container,
