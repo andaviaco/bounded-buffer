@@ -45,21 +45,7 @@
         <v-container fluid grid-list-md>
           <v-layout row wrap>
             <v-flex xs6>
-              <v-card>
-                <v-card-title primary-title>
-                  <h4>Productor</h4>
-
-                  <div>
-                    <v-chip outline color="primary">
-                      <v-icon left>fa-fee</v-icon> Dormido
-                    </v-chip>
-                  </div>
-                </v-card-title>
-
-                <v-card-text>
-                  <p>[00:00:00] durmiendo</p>
-                </v-card-text>
-              </v-card>
+              <producer-card></producer-card>
             </v-flex>
 
             <v-flex xs6>
@@ -67,7 +53,7 @@
                   <v-card-title primary-title>
                     <h4>Consumidor</h4>
                     <v-chip outline color="red">
-                      <v-icon left>fa-fee</v-icon> Trabajando
+                      <v-icon left>info</v-icon> Trabajando
                     </v-chip>
                   </v-card-title>
 
@@ -89,6 +75,7 @@
 
 <script>
   import Container from './components/Container';
+  import ProducerCard from './components/ProducerCard';
 
   import Buffer from './models/Buffer';
   import Producer from './models/Producer';
@@ -119,6 +106,7 @@
     },
     components: {
       Container,
+      ProducerCard,
     },
   }
 </script>
