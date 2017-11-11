@@ -9,6 +9,12 @@ export const PRODUCER_STATUS = {
   wakingUp: 2,
 };
 
+export const CONSUMER_STATUS = {
+  sleeping: 0,
+  working: 1,
+  wakingUp: 2,
+};
+
 export const BUFFER_AGENTS = {
   none: 'disponible',
   producer: 'productor',
