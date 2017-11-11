@@ -19,7 +19,7 @@
                 <v-card-title primary-title>
                   <h3>Contenedor</h3>
                   <v-chip outline :color="agentColor">
-                    <v-icon left>info</v-icon> {{buffer.currentAgent}}
+                    <v-icon left>info</v-icon> {{buffer.currentAgent || 'disponible'}}
                     </v-chip>
                 </v-card-title>
 
@@ -83,13 +83,15 @@
 
   import Buffer from './models/Buffer';
   import Producer from './models/Producer';
+  import Consumer from './models/Consumer';
 
-  import { setRandomTimeout } from './util';
+  import { setRandomTimeout, getRandomIntInclusive } from './util';
   import { BUFFER_SIZE, BUFFER_AGENTS_COLORS } from './const';
 
 
   const buffer = new Buffer(BUFFER_SIZE);
-  const producer = new Producer();
+  const producer = new Producer(buffer);
+  const consumer = new Consumer(buffer);
 
   export default {
     data () {
@@ -107,10 +109,15 @@
     methods: {
       handleStartClick() {
         this.producerTimeout = setRandomTimeout(this.wakeProducerUp);
+        this.consumerTimeout = setRandomTimeout(this.wakeConsumerUp);
       },
       async wakeProducerUp() {
-        await buffer.insert(producer.randProduct());
+        await producer.randProduct();
         this.producerTimeout = setRandomTimeout(this.wakeProducerUp);
+      },
+      async wakeConsumerUp() {
+        await consumer.randConsume(this.consumerTimeout);
+        this.consumerTimeout = setRandomTimeout(this.wakeConsumerUp);
       },
     },
     components: {
