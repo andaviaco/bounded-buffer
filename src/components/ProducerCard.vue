@@ -5,13 +5,13 @@
 
       <div>
         <v-chip outline color="primary">
-          <v-icon left>info</v-icon> Dormido
+          <v-icon left>info</v-icon> {{ status }}
         </v-chip>
       </div>
     </v-card-title>
 
     <v-card-text>
-      <p>[00:00:00] durmiendo</p>
+      <p v-for="log in logs">{{ log }}</p>
     </v-card-text>
   </v-card>
 </template>
@@ -19,6 +19,7 @@
 <script>
 export default {
   name: 'producer-card',
+  props: ['status', 'logs'],
 }
 </script>
 

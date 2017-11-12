@@ -49,7 +49,10 @@
         <v-container fluid grid-list-md>
           <v-layout row wrap>
             <v-flex xs6>
-              <producer-card></producer-card>
+              <producer-card
+                :status="producer.status"
+                :logs="producerLogs"
+              ></producer-card>
             </v-flex>
 
             <v-flex xs6>
