@@ -1,29 +1,49 @@
+import EventEmitter from 'events';
+
 import { getRandomIntInclusive } from '../util';
 import { PRODUCER_CHARS, PRODUCER_STATUS } from '../const';
 
-export default class Producer {
+export default class Producer extends EventEmitter {
   constructor(buffer) {
+    super();
+
     this.status = PRODUCER_STATUS.sleeping;
     this.buffer = buffer;
   }
 
-  produce(n=1) {
+  async produce(n=1) {
+    let product;
+    let result;
+
+    this.status = PRODUCER_STATUS.wakingUp;
+    this.emit('wakeUp');
+
     const nitems = n > this.buffer.freeslots? this.buffer.freeslots : n;
+
     if (!this.buffer.isAvailable && this.buffer.freeslots) {
-      console.log('try produce: NOPE');
+      this.status = PRODUCER_STATUS.sleeping;
+      this.emit('sleep');
+
       return null;
     }
 
-    const product = Array.from(Array(nitems), () => PRODUCER_CHARS[getRandomIntInclusive(0, PRODUCER_CHARS.length - 1)]);
+    this.status = PRODUCER_STATUS.working;
+    this.emit('work');
 
-    return this.buffer.insert(product);
+    product = Array.from(Array(nitems), () => PRODUCER_CHARS[getRandomIntInclusive(0, PRODUCER_CHARS.length - 1)]);
+    result = await this.buffer.insert(product);
+
+    this.status = PRODUCER_STATUS.sleeping;
+    this.emit('sleep');
+
+    return result
   }
 
   randProduct() {
-    if (!this.buffer.isAvailable && this.buffer.freeslots) {
-      return null;
-    }
-    
+    // if (!this.buffer.isAvailable && this.buffer.freeslots) {
+    //   return null;
+    // }
+
     const product = this.produce(getRandomIntInclusive(2, 8));
 
     return product;
