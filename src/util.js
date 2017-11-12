@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 
 export function getRandomIntInclusive(min, max) {
   const minVal = Math.ceil(min);
@@ -22,4 +24,8 @@ export function timedFn(fn) {
       resolve();
     }, 1000);
   });
+}
+
+export function formateLogMessage(message, date=moment()) {
+  return `[${date.format('HH:mm:ss')}] ${message}`;
 }
