@@ -56,18 +56,10 @@
             </v-flex>
 
             <v-flex xs6>
-              <v-card>
-                  <v-card-title primary-title>
-                    <h4>Consumidor</h4>
-                    <v-chip outline color="red">
-                      <v-icon left>info</v-icon> Trabajando
-                    </v-chip>
-                  </v-card-title>
-
-                  <v-card-text>
-                    <p>[00:00:00] durmiendo</p>
-                  </v-card-text>
-              </v-card>
+              <consumer-card
+                :status="consumer.status"
+                :logs="consumerLogs"
+              ></consumer-card>
             </v-flex>
           </v-layout>
         </v-container>
@@ -83,6 +75,7 @@
 <script>
   import Container from './components/Container';
   import ProducerCard from './components/ProducerCard';
+  import ConsumerCard from './components/ConsumerCard';
 
   import Buffer from './models/Buffer';
   import Producer from './models/Producer';
@@ -126,6 +119,7 @@
     components: {
       Container,
       ProducerCard,
+      ConsumerCard,
     },
   }
 </script>
