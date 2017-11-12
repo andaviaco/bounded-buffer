@@ -81,7 +81,11 @@
   import Producer from './models/Producer';
   import Consumer from './models/Consumer';
 
-  import { setRandomTimeout, getRandomIntInclusive } from './util';
+  import {
+    setRandomTimeout,
+    getRandomIntInclusive,
+    formateLogMessage,
+  } from './util';
   import { BUFFER_SIZE, BUFFER_AGENTS_COLORS } from './const';
 
 
@@ -94,7 +98,13 @@
       return {
         title: 'Practica X: Productor - Consumidor',
         buffer: buffer,
+        producer: producer,
+        consumer: consumer,
         producerPos: buffer.producerIndex,
+        producerLogs: [],
+        consumerLogs: [],
+        producerTimeout: null,
+        consumerTimeout: null,
       };
     },
     computed: {
@@ -106,6 +116,8 @@
       handleStartClick() {
         this.producerTimeout = setRandomTimeout(this.wakeProducerUp);
         this.consumerTimeout = setRandomTimeout(this.wakeConsumerUp);
+
+        this.registerLogs();
       },
       async wakeProducerUp() {
         await producer.randProduct();
@@ -114,6 +126,20 @@
       async wakeConsumerUp() {
         await consumer.randConsume(this.consumerTimeout);
         this.consumerTimeout = setRandomTimeout(this.wakeConsumerUp);
+      },
+
+      registerLogs() {
+        this.producer.on('work', () => this.producerLogs.push(formateLogMessage('Trabajando')))
+        this.producer.on('sleep', () => this.producerLogs.push(formateLogMessage('Durmiendo')))
+        this.producer.on('wakeUp', () => this.producerLogs.push(formateLogMessage('Despertando')))
+
+        this.consumer.on('work', () => this.consumerLogs.push(formateLogMessage('Trabajando')))
+        this.consumer.on('sleep', () => this.consumerLogs.push(formateLogMessage('Durmiendo')))
+        this.consumer.on('wakeUp', () => this.consumerLogs.push(formateLogMessage('Despertando')))
+      },
+      unregisterLogs() {
+        this.producer.removeAllListeners();
+        this.consumer.removeAllListeners();
       },
     },
     components: {
