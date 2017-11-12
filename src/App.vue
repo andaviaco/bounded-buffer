@@ -4,7 +4,10 @@
       <v-toolbar-title v-text="title"></v-toolbar-title>
     </v-toolbar>
 
-    <main>
+    <main
+      tabindex="-1"
+      @keyup.esc="handlePauseKey"
+    >
       <v-content>
         <v-container fluid>
           <v-layout column align-center>
@@ -140,6 +143,17 @@
       unregisterLogs() {
         this.producer.removeAllListeners();
         this.consumer.removeAllListeners();
+      },
+      handlePauseKey() {
+        console.log('PAUSE');
+
+        clearTimeout(this.producerTimeout);
+        clearTimeout(this.consumerTimeout);
+
+        this.producerLogs.push('PAUSA');
+        this.consumerLogs.push('PAUSA');
+
+        this.unregisterLogs();
       },
     },
     components: {
