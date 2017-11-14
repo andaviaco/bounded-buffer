@@ -26,6 +26,24 @@ export function timedFn(fn) {
   });
 }
 
+export function intervalFn(ntimes, fn) {
+  let intervalId = null;
+  let i = 0;
+
+  return new Promise((resolve) => {
+    intervalId = setInterval(() => {
+      fn(i, clearInterval.bind(null, intervalId));
+
+      i += 1;
+
+      if (i === ntimes) {
+        clearInterval(intervalId);
+        resolve();
+      }
+    }, 1000);
+  })
+}
+
 export function formateLogMessage(message, date=moment()) {
   return `[${date.format('HH:mm:ss')}] ${message}`;
 }
