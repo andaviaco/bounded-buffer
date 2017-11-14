@@ -45,5 +45,5 @@ export function intervalFn(ntimes, fn) {
 }
 
 export function formateLogMessage(message, date=moment()) {
-  return `[${date.format('HH:mm:ss')}] ${message}`;
+  return `[${date.format('HH:mm:ss.SSS')}] ${message}`;
 }
