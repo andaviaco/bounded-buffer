@@ -1,4 +1,4 @@
-import { timedFn } from '../util';
+import { intervalFn } from '../util';
 import { BUFFER_AGENTS } from '../const';
 
 export default class Buffer {
@@ -8,6 +8,8 @@ export default class Buffer {
     this.producerIndex = 0;
     this.consumerIndex = 0;
     this.currentAgent = BUFFER_AGENTS.none;
+    this.producerIntervalId = null;
+    this.consumerIntervalId = null;
   }
 
   get freeslots() {
@@ -19,47 +21,54 @@ export default class Buffer {
   }
 
   get isAvailable() {
-    console.log(!this.currentAgent, this.currentAgent);
     return !this.currentAgent;
   }
 
   async insert(payload) {
     this.currentAgent = BUFFER_AGENTS.producer;
 
-    for (const data of payload) {
-      await timedFn(() => {
-        this.data[this.producerIndex].payload = data;
-        this.producerIndex += 1;
+    await intervalFn(payload.length, (i, stop) => {
+      this.producerIntervalStop = stop;
 
-        if (this.producerIndex >= this.size) {
-          this.producerIndex = 0;
-        }
-      });
-    }
+      this.data[this.producerIndex].payload = payload[i];
+      this.producerIndex += 1;
+
+      if (this.producerIndex >= this.size) {
+        this.producerIndex = 0;
+      }
+    });
 
     this.currentAgent = BUFFER_AGENTS.none;
   }
 
   async remove(n=1) {
-    this.currentAgent = BUFFER_AGENTS.consumer;
     const consumed = [];
 
-    for (const i of new Array(n)) {
-      await timedFn(() => {
-        const data = this.data[this.consumerIndex].payload;
+    this.currentAgent = BUFFER_AGENTS.consumer;
 
-        consumed.push(data);
-        this.data[this.consumerIndex].payload = null;
-        this.consumerIndex += 1;
+    await intervalFn(n, (i, stop) => {
+      const data = this.data[this.consumerIndex].payload;
 
-        if (this.consumerIndex >= this.size) {
-          this.consumerIndex = 0;
-        }
-      });
-    }
+      this.consumerIntervalStop = stop;
+
+      consumed.push(data);
+      this.data[this.consumerIndex].payload = null;
+      this.consumerIndex += 1;
+
+      if (this.consumerIndex >= this.size) {
+        this.consumerIndex = 0;
+      }
+    })
 
     this.currentAgent = BUFFER_AGENTS.none;
 
     return consumed;
+  }
+
+  stop() {
+    this.currentAgent = BUFFER_AGENTS.none;
+
+    this.producerIntervalStop();
+    this.consumerIntervalStop();
   }
 }
