@@ -20,7 +20,7 @@ export default class Producer extends EventEmitter {
 
     const nitems = n > this.buffer.freeslots? this.buffer.freeslots : n;
 
-    if (!this.buffer.isAvailable && this.buffer.freeslots) {
+    if (!this.buffer.isAvailable || !this.buffer.freeslots) {
       this.status = PRODUCER_STATUS.sleeping;
       this.emit('sleep');
 

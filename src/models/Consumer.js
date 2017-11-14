@@ -19,8 +19,8 @@ export default class Producer extends EventEmitter {
     this.emit('wakeUp');
     nitems = n > this.buffer.loadedSlots? this.buffer.loadedSlots : n;
 
-    if (!this.buffer.isAvailable && this.buffer.loadedSlots) {
-      this.status = CONSUMER_STATUS.sleep;
+    if (!this.buffer.isAvailable || !this.buffer.loadedSlots) {
+      this.status = CONSUMER_STATUS.sleeping;
       this.emit('sleep');
 
       return null;
