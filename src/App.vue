@@ -98,7 +98,7 @@
   export default {
     data () {
       return {
-        title: 'Practica X: Productor - Consumidor',
+        title: 'Practica 6: Productor - Consumidor',
         buffer: buffer,
         producer: producer,
         consumer: consumer,
