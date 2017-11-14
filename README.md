@@ -2,6 +2,8 @@
 
 > Producer-Consumer (bounded-buffer) problem
 
+![Bounded-Buffer preview](/../screenshots/bounded-buffer-fullpage.png?raw=true "Bounded-Buffer")
+
 ## Build Setup
 
 ``` bash
