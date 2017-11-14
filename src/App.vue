@@ -135,11 +135,11 @@
       },
 
       registerLogs() {
-        this.producer.on('work', () => this.producerLogs.push(formateLogMessage('Trabajando')))
+        this.producer.on('work', product => this.producerLogs.push(formateLogMessage(`Trabajando: ${product}`)))
         this.producer.on('sleep', () => this.producerLogs.push(formateLogMessage('Durmiendo')))
         this.producer.on('wakeUp', () => this.producerLogs.push(formateLogMessage('Despertando')))
 
-        this.consumer.on('work', () => this.consumerLogs.push(formateLogMessage('Trabajando')))
+        this.consumer.on('work', consume => this.consumerLogs.push(formateLogMessage(`Trabajando: ${consume}`)))
         this.consumer.on('sleep', () => this.consumerLogs.push(formateLogMessage('Durmiendo')))
         this.consumer.on('wakeUp', () => this.consumerLogs.push(formateLogMessage('Despertando')))
       },
