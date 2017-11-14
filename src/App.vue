@@ -117,6 +117,9 @@
     },
     methods: {
       handleStartClick() {
+        clearTimeout(this.producerTimeout);
+        clearTimeout(this.consumerTimeout);
+
         this.producerTimeout = setRandomTimeout(this.wakeProducerUp);
         this.consumerTimeout = setRandomTimeout(this.wakeConsumerUp);
 
@@ -146,10 +149,10 @@
       },
       handlePauseKey() {
         console.log('PAUSE');
-
         clearTimeout(this.producerTimeout);
         clearTimeout(this.consumerTimeout);
 
+        this.buffer.stop();
         this.producerLogs.push('PAUSA');
         this.consumerLogs.push('PAUSA');
 
