@@ -40,9 +40,6 @@ export default class Producer extends EventEmitter {
   }
 
   randProduct() {
-    // if (!this.buffer.isAvailable && this.buffer.freeslots) {
-    //   return null;
-    // }
 
     const product = this.produce(getRandomIntInclusive(2, 8));
 
