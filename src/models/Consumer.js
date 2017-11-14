@@ -26,12 +26,12 @@ export default class Producer extends EventEmitter {
       return null;
     }
 
-    this.status = CONSUMER_STATUS.work;
-    this.emit('work');
+    this.status = CONSUMER_STATUS.working;
+    this.emit('work', nitems);
 
     consume = await this.buffer.remove(nitems);
 
-    this.status = CONSUMER_STATUS.sleep;
+    this.status = CONSUMER_STATUS.sleeping;
     this.emit('sleep');
 
     return consume;

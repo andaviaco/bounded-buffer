@@ -28,9 +28,9 @@ export default class Producer extends EventEmitter {
     }
 
     this.status = PRODUCER_STATUS.working;
-    this.emit('work');
-
     product = Array.from(Array(nitems), () => PRODUCER_CHARS[getRandomIntInclusive(0, PRODUCER_CHARS.length - 1)]);
+    this.emit('work', product);
+
     result = await this.buffer.insert(product);
 
     this.status = PRODUCER_STATUS.sleeping;
